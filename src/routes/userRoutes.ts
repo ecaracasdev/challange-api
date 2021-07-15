@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express'
 
-import User from '../models/user'
+import User from '../models/user';
+import responses from '../responses/responses';
 
 class UserRoutes {
 
@@ -14,6 +15,7 @@ class UserRoutes {
   public async getUsers(req: Request, res: Response):Promise<void> {
     const users = await User.find().populate('sons','firstName lastName dni -_id');
     res.json(users);
+
   }
 
   public async getUser(req: Request, res: Response): Promise<void>  {
