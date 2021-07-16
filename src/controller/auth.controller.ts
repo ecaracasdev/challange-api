@@ -9,7 +9,7 @@ class Auth {
     
   }
 
-  //PARA REGISTAR AL USUARIO
+  //REGISTER USER
   async signup(req: Request, res: Response) {
 
     //saving new user
@@ -34,7 +34,7 @@ class Auth {
     response.sign_success(req, res, savedUser, 'User registered', 201, token)
   }
   
-  //para hacer login
+  //LOGIN USER
   async login(req: Request, res: Response) {
 
     const user = await User.findOne({email:req.body.email})
@@ -48,6 +48,13 @@ class Auth {
     })
 
     response.sign_success(req, res, {email: user.email, password:user.password}, 'Login success', 200, token)
+  }
+
+  //USER PROFILE
+  async profile(req: Request, res: Response) {
+    const user = await User.findById(req.userId, {password:0}) || ''
+    if(!user) response.error(req, res, 'User not found', 400)
+    response.success(req, res, user , 'profile', 200)
   }
 
 }

@@ -18,7 +18,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 class Auth {
     constructor() {
     }
-    //PARA REGISTAR AL USUARIO
+    //REGISTER USER
     signup(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             //saving new user
@@ -39,7 +39,7 @@ class Auth {
             responses_1.default.sign_success(req, res, savedUser, 'User registered', 201, token);
         });
     }
-    //para hacer login
+    //LOGIN USER
     login(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield user_1.default.findOne({ email: req.body.email });
@@ -52,6 +52,15 @@ class Auth {
                 expiresIn: 60 * 60 * 24
             });
             responses_1.default.sign_success(req, res, { email: user.email, password: user.password }, 'Login success', 200, token);
+        });
+    }
+    //USER PROFILE
+    profile(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = (yield user_1.default.findById(req.userId, { password: 0 })) || '';
+            if (!user)
+                responses_1.default.error(req, res, 'User not found', 400);
+            responses_1.default.success(req, res, user, 'profile', 200);
         });
     }
 }

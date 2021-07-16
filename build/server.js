@@ -33,8 +33,8 @@ class Server {
     }
     routes() {
         this.app.use('/api/auth', auth_1.default);
-        this.app.use('/api/sons', sonRoutes_1.default);
         this.app.use('/api/users', userRoutes_1.default);
+        this.app.use('/api/sons', sonRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

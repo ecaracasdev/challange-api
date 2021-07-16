@@ -37,8 +37,8 @@ class Server {
 
   routes() {
     this.app.use('/api/auth',auth);
-    this.app.use('/api/sons',sonRoutes);
     this.app.use('/api/users',userRoutes);
+    this.app.use('/api/sons',sonRoutes);
   }
 
   start() {

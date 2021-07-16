@@ -2,7 +2,7 @@
   "name": "challange-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "ts": "tsc -w",
     "dev": "nodemon ./build/server.js",

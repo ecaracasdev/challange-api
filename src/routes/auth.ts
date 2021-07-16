@@ -1,6 +1,7 @@
 import { Router } from 'express'
 
 import auth from '../controller/auth.controller';
+import { tokenValidation } from "../libs/verifyToken";
 
 class AuthRoutes {
   
@@ -14,6 +15,7 @@ class AuthRoutes {
   routes() {
     this.router.post('/signup', auth.signup )
     this.router.post('/login', auth.login )
+    this.router.get('/profile', tokenValidation, auth.profile )
   }
 
 }
