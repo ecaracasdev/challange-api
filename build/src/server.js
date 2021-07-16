@@ -8,7 +8,6 @@ const morgan_1 = __importDefault(require("morgan"));
 const helmet_1 = __importDefault(require("helmet"));
 const compression_1 = __importDefault(require("compression"));
 const cors_1 = __importDefault(require("cors"));
-const dotenv_1 = __importDefault(require("dotenv"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const sonRoutes_1 = __importDefault(require("./routes/sonRoutes"));
 const auth_1 = __importDefault(require("./routes/auth"));
@@ -20,8 +19,8 @@ class Server {
         this.routes();
     }
     config() {
-        dotenv_1.default.config();
-        database_1.default(process.env.MONGO_URI || 'mongodb://localhost/challangeapi');
+        const MONGO_URI = 'mongodb://localhost/challangeapi';
+        database_1.default(MONGO_URI);
         this.app.set('port', process.env.PORT || 3000);
         //middlewares
         this.app.use(morgan_1.default('dev'));

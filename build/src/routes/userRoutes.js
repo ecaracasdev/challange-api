@@ -30,8 +30,7 @@ class UserRoutes {
         return __awaiter(this, void 0, void 0, function* () {
             const { username } = req.params;
             const user = yield user_1.default.findOne({ username }).populate('sons', 'firstName lastName dni -_id');
-            const data = [user];
-            responses_1.default.success(req, res, data, 'User found', 200);
+            responses_1.default.success(req, res, user, 'User found', 200);
         });
     }
     createUser(req, res) {
@@ -46,16 +45,14 @@ class UserRoutes {
         return __awaiter(this, void 0, void 0, function* () {
             const { username } = req.params;
             const user = yield user_1.default.findOneAndUpdate({ username }, req.body, { new: true });
-            const data = [user];
-            responses_1.default.success(req, res, data, 'User Updated', 201);
+            responses_1.default.success(req, res, user, 'User Updated', 201);
         });
     }
     deleteUser(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { username } = req.params;
             const user = yield user_1.default.findOneAndDelete({ username });
-            const data = [user];
-            responses_1.default.success(req, res, data, 'User Deleted', 200);
+            responses_1.default.success(req, res, user.name, 'User Deleted', 200);
         });
     }
     routes() {
