@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const sons_1 = __importDefault(require("../models/sons"));
 const user_1 = __importDefault(require("../models/user"));
+const responses_1 = __importDefault(require("../network/responses"));
 class SonRoutes {
     constructor() {
         this.router = express_1.Router();
@@ -23,43 +24,46 @@ class SonRoutes {
     getSons(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const sons = yield sons_1.default.find();
-            res.json(sons);
+            responses_1.default.success(req, res, sons, 'List of sons', 200);
         });
     }
     getSon(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { dni } = req.params;
             const son = yield sons_1.default.findOne({ dni });
-            res.json({ data: son });
+            responses_1.default.success(req, res, son, 'Son found', 200);
         });
     }
     createSon(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { firstName, lastName, dni } = req.body;
+            const { firstName, lastName, dni, email, password, username } = req.body;
             const newSon = new sons_1.default({ firstName, lastName, dni });
             yield newSon.save();
             const newUser = new user_1.default({
-                name: firstName,
-                email: `${firstName}@mail.com`,
-                password: dni,
-                username: `${firstName}${lastName}`
+                firstName,
+                lastName,
+                dni,
+                email,
+                password,
+                username
             });
             yield newUser;
-            res.json({ data: { "newSon": newSon, "newUser": newUser } });
+            const data = { "newSon": newSon, "newUser": newUser };
+            responses_1.default.success(req, res, data, 'Son Created and registered as User', 201);
         });
     }
     updateSon(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { dni } = req.params;
             const son = yield sons_1.default.findOneAndUpdate({ dni }, req.body, { new: true });
-            res.json({ data: son });
+            responses_1.default.success(req, res, son, 'Son Updated', 201);
         });
     }
     deleteSon(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { url } = req.params;
             const son = yield sons_1.default.findOneAndDelete({ url });
-            res.json({ data: `${son.firstName} was deleted` });
+            responses_1.default.success(req, res, son.firstName, 'Son Deleted', 200);
         });
     }
     routes() {

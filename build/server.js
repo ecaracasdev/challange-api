@@ -6,12 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const helmet_1 = __importDefault(require("helmet"));
-const mongoose_1 = __importDefault(require("mongoose"));
 const compression_1 = __importDefault(require("compression"));
 const cors_1 = __importDefault(require("cors"));
-const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
+const dotenv_1 = __importDefault(require("dotenv"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const sonRoutes_1 = __importDefault(require("./routes/sonRoutes"));
+const auth_1 = __importDefault(require("./routes/auth"));
+const database_1 = __importDefault(require("./database"));
 class Server {
     constructor() {
         this.app = express_1.default();
@@ -19,15 +20,8 @@ class Server {
         this.routes();
     }
     config() {
-        const MONGO_URI = 'mongodb://localhost/challangeapi';
-        mongoose_1.default.set('useFindAndModify', true);
-        mongoose_1.default.connect(process.env.MONGODB_URL || MONGO_URI, {
-            useNewUrlParser: true,
-            useCreateIndex: true,
-            useUnifiedTopology: true,
-            useFindAndModify: false
-        })
-            .then(db => console.log('DB is connected'));
+        dotenv_1.default.config();
+        database_1.default(process.env.MONGO_URI || 'mongodb://localhost/challangeapi');
         this.app.set('port', process.env.PORT || 3000);
         //middlewares
         this.app.use(morgan_1.default('dev'));
@@ -38,9 +32,9 @@ class Server {
         this.app.use(cors_1.default());
     }
     routes() {
-        this.app.use(indexRoutes_1.default);
-        this.app.use('/api/sons', sonRoutes_1.default);
+        this.app.use('/api/auth', auth_1.default);
         this.app.use('/api/users', userRoutes_1.default);
+        this.app.use('/api/sons', sonRoutes_1.default);
     }
     start() {
         this.app.listen(this.app.get('port'), () => {

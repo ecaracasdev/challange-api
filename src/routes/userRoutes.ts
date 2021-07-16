@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express'
 
-import User from '../models/user'
+import User from '../models/user';
+import response from '../network/responses';
 
 class UserRoutes {
 
@@ -13,32 +14,35 @@ class UserRoutes {
 
   public async getUsers(req: Request, res: Response):Promise<void> {
     const users = await User.find().populate('sons','firstName lastName dni -_id');
-    res.json(users);
+    response.success(req, res, users, 'List of users', 200)
   }
 
   public async getUser(req: Request, res: Response): Promise<void>  {
     const { username } = req.params;
     const user = await User.findOne({username}).populate('sons','firstName lastName dni -_id');
-    res.json({data:user});
+    const data = [user]
+    response.success(req, res, data, 'User found', 200)
   }
 
   public async createUser(req: Request, res: Response): Promise<void>  {
-    const {name, email, password, username } = req.body;
-    const newUser = new User({name, email, password, username });
+    const {firstName, lastName, dni, email, password, username } = req.body;
+    const newUser = new User({firstName, lastName, dni, email, password, username });
     await newUser.save();
-    res.json({data:newUser});
+    response.success(req, res, newUser, 'User Created', 201)
   }
 
   public async updateUser(req: Request, res: Response): Promise<void>  {
     const { username } = req.params;
     const user = await User.findOneAndUpdate({username}, req.body, {new: true});
-    res.json({data: user });
+    const data = [user]
+    response.success(req, res, data , 'User Updated', 201)
   }
 
   public async deleteUser(req: Request, res: Response): Promise<void>  {
     const { username } = req.params
     const user = await User.findOneAndDelete({username})
-    res.json({data: `The user ${user.name} was deleted` })
+    const data = [user]
+    response.success(req, res, data, 'User Deleted', 200)
   }
 
   routes() {

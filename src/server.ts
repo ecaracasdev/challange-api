@@ -1,13 +1,15 @@
 import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
-import mongoose from "mongoose";
 import compression from "compression";
 import cors from "cors";
+import dotenv from "dotenv";
 
-import indexRoutes from './routes/indexRoutes';
 import userRoutes from "./routes/userRoutes";
 import sonRoutes from "./routes/sonRoutes";
+import auth from "./routes/auth";
+
+import connectDb from './database';
 
 class Server {
   public app: express.Application
@@ -19,15 +21,9 @@ class Server {
   }
 
   config() {
-    const MONGO_URI = 'mongodb://localhost/challangeapi';
-    mongoose.set('useFindAndModify', true);
-    mongoose.connect( process.env.MONGODB_URL || MONGO_URI , {
-      useNewUrlParser:true,
-      useCreateIndex:true,
-      useUnifiedTopology:true,
-      useFindAndModify:false
-    })
-      .then( db => console.log('DB is connected'));
+
+    dotenv.config()
+    connectDb(process.env.MONGO_URI || 'mongodb://localhost/challangeapi')
     
     this.app.set('port', process.env.PORT || 3000);
     //middlewares
@@ -40,9 +36,9 @@ class Server {
   }
 
   routes() {
-    this.app.use(indexRoutes);
-    this.app.use('/api/sons',sonRoutes);
+    this.app.use('/api/auth',auth);
     this.app.use('/api/users',userRoutes);
+    this.app.use('/api/sons',sonRoutes);
   }
 
   start() {
