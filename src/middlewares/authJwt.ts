@@ -14,8 +14,8 @@ interface Ipaylaod {
 
 export const tokenValidation = (req: Request, res: Response, next: NextFunction) => {
   try {
-    let token: string = req.header('auth-token') || ''
-    if (!token) response.error(req, res, 'Access token required', 400)
+    let token = req.header('auth-token') 
+    if (!token) return response.error(req, res, 'Access token required', 400)
 
     const payload = jwt.verify(token, config.secret) as Ipaylaod
     //declaration merging

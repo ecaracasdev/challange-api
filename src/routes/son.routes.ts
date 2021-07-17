@@ -14,6 +14,7 @@ class SonRoutes {
   routes() {
     this.router.get('/',[tokenValidation, isAdmin], son.getSons)
     this.router.get('/:dni',[tokenValidation, isAdmin], son.getSon)
+    this.router.get('/:username/sonslist',[tokenValidation, isAdmin], son.getSonListByLimit)
     this.router.post('/',[tokenValidation, isAdmin], son.createSon)
     this.router.put('/:dni',[tokenValidation, isAdmin], son.updateSon)
     this.router.delete('/:dni',[tokenValidation, isAdmin], son.deleteSon)

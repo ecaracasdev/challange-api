@@ -57,7 +57,7 @@ class Auth {
 
   async profile(req: Request, res: Response) {
     const user = await User.findById(req.userId, { password: 0 }).populate('roles', 'name -_id') || ''
-    if (!user) response.error(req, res, 'User not found', 400)
+    if (!user) return response.error(req, res, 'User not found', 400)
     response.success(req, res, user, 'profile', 200)
   }
 

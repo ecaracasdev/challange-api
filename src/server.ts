@@ -10,7 +10,7 @@ import sonRoutes from "./routes/son.routes"
 import auth from "./routes/auth.routes"
 import connectDb from './database'
 import config from "./config"
-import { createRoles } from "./libs/initialSetup"
+import { createRoles, createSons } from "./libs/initialSetup"
 
 class Server {
   public app: express.Application
@@ -27,6 +27,8 @@ class Server {
     dotenv.config()
     connectDb(config.db.url)
     createRoles()
+    createSons()
+
     this.app.set('port', config.port )
     
     //middlewares
