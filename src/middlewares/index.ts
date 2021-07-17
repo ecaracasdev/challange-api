@@ -1,7 +1,8 @@
-import { tokenValidation, isModerator, isAdmin } from "./authJwt"
+import { tokenValidation, isModerator, isAdmin, isUserOrAdmin } from "./authJwt"
 
 export {
   tokenValidation,
   isModerator,
-  isAdmin
+  isAdmin,
+  isUserOrAdmin
 }

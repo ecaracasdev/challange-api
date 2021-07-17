@@ -12,10 +12,8 @@ class Auth {
 
   }
 
-  //REGISTER USER
   async signup(req: Request, res: Response) {
 
-    //saving new user
     const { firstName, lastName, dni, email, password, username, roles } = req.body
 
     const user: IUser = new User({
@@ -29,24 +27,19 @@ class Auth {
 
     user.password = await user.encryptPassword(user.password)
 
-    if(roles) {
-      const foundRoles = await Roles.find({name:{$in:roles}})
-      user.roles = foundRoles.map( (role: { _id: any }) => role._id )
-    }else {
-      const role = await Roles.findOne({name:"user"})
+    if (roles) {
+      const foundRoles = await Roles.find({ name: { $in: roles } })
+      user.roles = foundRoles.map((role: { _id: any }) => role._id)
+    } else {
+      const role = await Roles.findOne({ name: "user" })
       user.roles = [role._id]
     }
 
     const savedUser = await user.save()
-
-    console.log(`[auth.controller] Datos usuario creado: \n`, savedUser)
-
-    //token
     const token: string = jwt.sign({ _id: savedUser._id }, config.secret)
     response.sign_success(req, res, savedUser, 'User registered', 201, token)
   }
 
-  //LOGIN USER
   async login(req: Request, res: Response) {
 
     const user = await User.findOne({ email: req.body.email })
@@ -62,7 +55,6 @@ class Auth {
     response.sign_success(req, res, { email: user.email, password: user.password }, 'Login success', 200, token)
   }
 
-  //USER PROFILE
   async profile(req: Request, res: Response) {
     const user = await User.findById(req.userId, { password: 0 }).populate('roles', 'name -_id') || ''
     if (!user) response.error(req, res, 'User not found', 400)

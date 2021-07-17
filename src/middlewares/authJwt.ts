@@ -31,7 +31,6 @@ export const tokenValidation = (req: Request, res: Response, next: NextFunction)
 
 export const isModerator = async (req: Request, res: Response, next: NextFunction) => {
   try {
-
     const user = await User.findById(req.userId)
     if (user) {
       const roles = await Role.find({ _id: { $in: user.roles } })
@@ -52,7 +51,6 @@ export const isModerator = async (req: Request, res: Response, next: NextFunctio
 
 export const isAdmin = async (req: Request, res: Response, next: NextFunction) => {
   try {
-
     const user = await User.findById(req.userId)
     if (user) {
       const roles = await Role.find({ _id: { $in: user.roles } })
@@ -64,7 +62,27 @@ export const isAdmin = async (req: Request, res: Response, next: NextFunction) =
       }
     }
 
-    return response.error(req, res, "Require moderator role", 403)
+    return response.error(req, res, "Require admin role", 403)
+  } catch (error) {
+    console.error(error)
+    return response.error(req, res, 'An error ocurred while checking moderator role', 401)
+  }
+}
+
+export const isUserOrAdmin = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const user = await User.findById(req.userId)
+    if (user) {
+      const roles = await Role.find({ _id: { $in: user.roles } })
+      for (let i = 0; i < roles.length; i++) {
+        if (roles[i]['name'] === "admin" || roles[i]['name'] === "user") {
+          next()
+          return
+        }
+      }
+    }
+
+    return response.error(req, res, "You can't do this action without login first", 403)
   } catch (error) {
     console.error(error)
     return response.error(req, res, 'An error ocurred while checking moderator role', 401)

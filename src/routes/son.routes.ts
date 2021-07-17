@@ -1,6 +1,7 @@
 import { Router } from 'express'
 
 import son from '../controller/son.controller'
+import { tokenValidation, isAdmin } from "../middlewares"
 class SonRoutes {
 
   router: Router
@@ -11,11 +12,11 @@ class SonRoutes {
   }
 
   routes() {
-    this.router.get('/', son.getSons)
-    this.router.get('/:dni', son.getSon)
-    this.router.post('/', son.createSon)
-    this.router.put('/:dni', son.updateSon)
-    this.router.delete('/:dni', son.deleteSon)
+    this.router.get('/',[tokenValidation, isAdmin], son.getSons)
+    this.router.get('/:dni',[tokenValidation, isAdmin], son.getSon)
+    this.router.post('/',[tokenValidation, isAdmin], son.createSon)
+    this.router.put('/:dni',[tokenValidation, isAdmin], son.updateSon)
+    this.router.delete('/:dni',[tokenValidation, isAdmin], son.deleteSon)
   }
 
 }
