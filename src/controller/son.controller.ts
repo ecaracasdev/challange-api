@@ -21,10 +21,13 @@ class Sons {
     response.success(req, res, son, 'Son found', 200)
   }
 
-  
+  async getSonListByLimit(req: Request, res: Response): Promise<void> {
+    const sons = await Son.find().limit(10)
+    response.success(req, res, sons, 'List of sons', 200)
+  }
 
   async createSon(req: Request, res: Response): Promise<void> {
-    const { firstName, lastName, dni, email, password, username } = req.body
+    const { firstName, lastName, dni} = req.body
     const newSon = new Son({ firstName, lastName, dni })
     await newSon.save()
 
@@ -32,12 +35,11 @@ class Sons {
       firstName,
       lastName,
       dni,
-      email,
-      password,
-      username
+      email: `${firstName}@mail.com`,
+      username: `${firstName}${lastName}`,
     })
 
-    newUser.password = await newUser.encryptPassword(newUser.password)
+    newUser.password = await newUser.encryptPassword(dni)
     const role = await Roles.findOne({name:"user"})
     newUser.roles = [role._id]
     await newUser.save()
@@ -45,15 +47,9 @@ class Sons {
     const father_user = await User.findById(req.userId)
 
     if(father_user) {
-      console.log(`[son.controller] list of sons before `, father_user.sons )
       father_user.sons.push(newSon.id) 
-
-      console.log(`[son.controller] list of sons after`, father_user.sons )
       await father_user.save()
     }
-
-    //console.log(`[son.cntroller] id of the login user ${req.userId}`)
-
     const data = { "newSon": newSon, "newUser": newUser }
     response.success(req, res, data, 'Son Created and registered as User', 201)
   }

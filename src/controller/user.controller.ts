@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import response from '../libs/responses'
 import User, { IUser } from '../models/user'
 import Roles from '../models/roles'
+import Son from '../models/sons'
 
 class Users {
   constructor() {
@@ -17,8 +18,8 @@ class Users {
     const { username } = req.params
 
     const userExist = await User.findById(req.userId)
-    if(!userExist) response.error(req, res, 'User Not Found', 400)
-    if(userExist?.username !== username) response.error(req, res, 'You are no allow to do this action', 400)
+    if(!userExist) return response.error(req, res, 'User Not Found', 400)
+    if(userExist?.username !== username) return response.error(req, res, 'You are no allow to do this action', 400)
 
     const user = await User.findOne({ username }).populate('sons', 'firstName lastName dni -_id').populate('roles','name -_id')
     const data = [user]
@@ -66,9 +67,12 @@ class Users {
     const { firstName, lastName, dni, email, password } = req.body
     
     const userExist = await User.findById(req.userId)
+    const sonExist = await Son.findOne({_id:{$in:userExist?.sons}})
 
-    if(!userExist) response.error(req, res, 'User Not Found', 400)
-    if(userExist?.username !== username) response.error(req, res, 'You are no allow to do this action', 400)
+    if( sonExist.firstName === username ) console.log(`${username} es hijo de ${userExist?.username}`)
+    if(!userExist) return response.error(req, res, 'User Not Found', 400)
+
+    if(userExist?.username !== username && sonExist.firstName !== username ) return response.error(req, res, 'You are no allow to do this action', 400)
 
     const user = await User.findOneAndUpdate(
       { username }, 
