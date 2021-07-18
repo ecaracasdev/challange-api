@@ -15,7 +15,7 @@ npm install
 
 ## Building
 
-In order to build the TypeScript compiler, ensure that you have [Git](https://git-scm.com/downloads) , [Node.js](https://nodejs.org/) and [MongoDB] installed.
+In order to build the TypeScript compiler, ensure that you have [Git](https://git-scm.com/downloads) , [Node.js](https://nodejs.org/) and [MongoDB](https://www.mongodb.com/es) installed.
 
 Clone a copy of the repo:
 
