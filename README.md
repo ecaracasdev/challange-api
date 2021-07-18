@@ -6,14 +6,12 @@
 For the latest stable version:
 
 ```bash
-npm install -g typescript
+npm install
 ```
 
 ## Documentation
 
-*  [TypeScript in 5 minutes](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html)
-*  [Programming handbook](https://www.typescriptlang.org/docs/handbook/intro.html)
-*  [Homepage](https://www.typescriptlang.org/)
+*  some documentation description
 
 ## Building
 
@@ -25,10 +23,10 @@ Clone a copy of the repo:
 git clone https://github.com/microsoft/TypeScript.git
 ```
 
-Change to the TypeScript directory:
+Change to the challange-api directory:
 
 ```bash
-cd TypeScript
+cd challange-api
 ```
 
 Install tools and dev dependencies:
