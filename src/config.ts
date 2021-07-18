@@ -13,6 +13,19 @@ export default {
     provideToken:'The action can not be done without login first',
     requireModeratorRole: 'Require moderator role',
     requireAdminRole: 'Require admin role',
-    roleValidationError: 'An error ocurred while user validation'
+    roleValidationError: 'An error ocurred while user validation',
+    sonsList:'List of sons',
+    sonFound:'Son found',
+    listSonLimit:'List of sons max 10',
+    sonCreated:'Son Created and registered as User',
+    sonUpdated:'Son Updated',
+    sonDeleted:'Son Deleted',
+    usersList:'List of users',
+    userFound:'User found',
+    userCreated:'User Created',
+    userUpdated:'User updated',
+    userDeleted:'User deleted',
+    userNotFound:'User not found',
+    permissionDenied:'You are not allow to do this action'
   }
 }
