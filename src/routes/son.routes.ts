@@ -1,7 +1,7 @@
 import { Router } from 'express'
 
 import son from '../controller/son.controller'
-import { tokenValidation, isAdmin } from "../middlewares"
+import { tokenValidation, isAdmin, isValidId } from "../middlewares"
 class SonRoutes {
 
   router: Router
@@ -12,12 +12,12 @@ class SonRoutes {
   }
 
   routes() {
-    this.router.get('/',[tokenValidation, isAdmin], son.getSons)
-    this.router.get('/:dni',[tokenValidation, isAdmin], son.getSon)
-    this.router.get('/:username/sonslist',[tokenValidation, isAdmin], son.getSonListByLimit)
-    this.router.post('/',[tokenValidation, isAdmin], son.createSon)
-    this.router.put('/:dni',[tokenValidation, isAdmin], son.updateSon)
-    this.router.delete('/:dni',[tokenValidation, isAdmin], son.deleteSon)
+    this.router.get('/', [tokenValidation, isAdmin], son.getSons)
+    this.router.get('/:id', [tokenValidation, isValidId, isAdmin], son.getSon)
+    this.router.get('/:username/sonslist', [tokenValidation, isAdmin], son.getSonListByLimit)
+    this.router.post('/', [tokenValidation, isAdmin], son.createSon)
+    this.router.put('/:id', [tokenValidation,isValidId, isAdmin], son.updateSon)
+    this.router.delete('/:id', [tokenValidation,isValidId, isAdmin], son.deleteSon)
   }
 
 }

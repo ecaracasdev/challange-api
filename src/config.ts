@@ -6,6 +6,7 @@ export default {
   },
   messages: {
     successSignup: 'Successfully registered user',
+    loginFailed:'There is no registered user associate to the provided username or email',
     loginError: 'Email or password are wrong',
     loginSuccess: 'Login success',
     profileInfo: 'Profile info',
@@ -26,6 +27,7 @@ export default {
     userUpdated:'User updated',
     userDeleted:'User deleted',
     userNotFound:'User not found',
-    permissionDenied:'You are not allow to do this action'
+    permissionDenied:'You are not allow to do this action',
+    sonByidNotFound: 'There is no son asociate at that id'
   }
 }

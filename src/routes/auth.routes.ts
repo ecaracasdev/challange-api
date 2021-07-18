@@ -1,7 +1,7 @@
 import { Router } from 'express'
 
 import auth from '../controller/auth.controller'
-import { tokenValidation } from "../middlewares"
+import { tokenValidation, validateBody } from "../middlewares"
 
 class AuthRoutes {
 
@@ -13,7 +13,7 @@ class AuthRoutes {
   }
 
   routes() {
-    this.router.post('/signup', auth.signup)
+    this.router.post('/signup', validateBody, auth.signup)
     this.router.post('/login', auth.login)
     this.router.get('/profile', tokenValidation, auth.profile)
   }

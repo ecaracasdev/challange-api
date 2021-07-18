@@ -7,9 +7,6 @@ import User from '../models/user'
 
 
 class Sons {
-  constructor() {
-
-  }
 
   async getSons(req: Request, res: Response): Promise<void> {
     const sons = await Son.find()
@@ -17,18 +14,20 @@ class Sons {
   }
 
   async getSon(req: Request, res: Response): Promise<void> {
-    const { dni } = req.params
-    const son = await Son.findOne({ dni })
+    const { id } = req.params
+    const son = await Son.findById(id)
+    if (!son) return response.error(req, res, config.messages.sonByidNotFound, 400)
     response.success(req, res, son, config.messages.sonFound, 200)
   }
 
   async getSonListByLimit(req: Request, res: Response): Promise<void> {
     const sons = await Son.find().limit(10)
+
     response.success(req, res, sons, config.messages.listSonLimit, 200)
   }
 
   async createSon(req: Request, res: Response): Promise<void> {
-    const { firstName, lastName, dni} = req.body
+    const { firstName, lastName, dni } = req.body
     const newSon = new Son({ firstName, lastName, dni })
     await newSon.save()
 
@@ -41,14 +40,14 @@ class Sons {
     })
 
     newUser.password = await newUser.encryptPassword(dni)
-    const role = await Roles.findOne({name:"user"})
+    const role = await Roles.findOne({ name: "user" })
     newUser.roles = [role._id]
     await newUser.save()
 
     const father_user = await User.findById(req.userId)
 
-    if(father_user) {
-      father_user.sons.push(newSon.id) 
+    if (father_user) {
+      father_user.sons.push(newSon.id)
       await father_user.save()
     }
     const data = { "newSon": newSon, "newUser": newUser }

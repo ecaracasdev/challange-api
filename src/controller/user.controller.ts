@@ -6,9 +6,6 @@ import Son from '../models/sons'
 import config from '../config'
 
 class Users {
-  constructor() {
-
-  }
 
   async getUsers(req: Request, res: Response): Promise<void> {
     const users = await User.find().populate('sons', 'firstName lastName dni -_id').populate('roles','name -_id')
