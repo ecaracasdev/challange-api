@@ -37,28 +37,28 @@ class Auth {
 
     const savedUser = await user.save()
     const token: string = jwt.sign({ _id: savedUser._id }, config.secret)
-    response.sign_success(req, res, savedUser, 'User registered', 201, token)
+    response.sign_success(req, res, savedUser, config.messages.successSignup, 201, token)
   }
 
   async login(req: Request, res: Response) {
 
     const user = await User.findOne({ email: req.body.email })
-    if (!user) return response.error(req, res, 'Email or password are wrong', 400)
+    if (!user) return response.error(req, res, config.messages.loginError, 400)
 
     const correctPassword = await user?.validatePassword(req.body.password)
-    if (!correctPassword) return response.error(req, res, 'Invalid password', 400)
+    if (!correctPassword) return response.error(req, res, config.messages.loginError, 400)
 
     const token: string = jwt.sign({ _id: user._id }, config.secret, {
       expiresIn: 60 * 60 * 24
     })
 
-    response.sign_success(req, res, { email: user.email, password: user.password }, 'Login success', 200, token)
+    response.sign_success(req, res, { email: user.email, password: user.password }, config.messages.loginSuccess, 200, token)
   }
 
   async profile(req: Request, res: Response) {
-    const user = await User.findById(req.userId, { password: 0 }).populate('roles', 'name -_id') || ''
+    const user = await User.findById(req.userId, { password: 0 }).populate('roles', 'name -_id')
     if (!user) return response.error(req, res, 'User not found', 400)
-    response.success(req, res, user, 'profile', 200)
+    response.success(req, res, user, config.messages.profileInfo, 200)
   }
 
 }
