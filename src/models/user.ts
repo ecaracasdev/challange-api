@@ -1,4 +1,4 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 import bcrypt from "bcryptjs";
 export interface IUser extends Document {
   sons:any;
@@ -8,6 +8,7 @@ export interface IUser extends Document {
   password: string
   encryptPassword(password: string): Promise<string>
   validatePassword(password:string): Promise<boolean>
+  validateId(id:string): Promise<boolean>
 }
 
 const UserSchema = new Schema<IUser>({
@@ -57,6 +58,10 @@ UserSchema.methods.encryptPassword = async (password:string): Promise<string> =>
 
 UserSchema.methods.validatePassword = async function (password:string): Promise<boolean> {
   return await bcrypt.compare(password, this.password)
+}
+
+UserSchema.methods.validateId = async function (id:string): Promise<boolean> {
+  return await Types.ObjectId.isValid(id)
 }
 
 export default model<IUser>('User', UserSchema)
