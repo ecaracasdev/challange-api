@@ -58,6 +58,7 @@ export const createSons = async () => {
     userSonTwo.roles = [userRole._id]
     await userSonTwo.save()
 
+    
   } catch (error) {
     console.error(error)
   }
