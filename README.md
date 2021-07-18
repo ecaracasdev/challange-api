@@ -20,7 +20,7 @@ In order to build the TypeScript compiler, ensure that you have [Git](https://gi
 Clone a copy of the repo:
 
 ```bash
-git clone https://github.com/microsoft/TypeScript.git
+git clone https://github.com/ecaracasdev/challange-api.git
 ```
 
 Change to the challange-api directory:
