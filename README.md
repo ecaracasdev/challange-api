@@ -40,7 +40,7 @@ Use one of the following to build and test:
 ```
 ts             # Build the compiler into built/local also watching for any change.
 dev            # Start the app for development process.
-start          # Build the compile into a product like directory.
+start          # Build the compiler into a product like directory and start the server.
 ```
 
 
