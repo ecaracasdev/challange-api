@@ -1,5 +1,5 @@
 # challange-api
-  The following challenge-api was developed using NODE with typescript, and contains a login / signup process for registered users who are authenticated using bcrypt and jwt, those users can modify their data (firtName, lastName, dni, password, email and username), and they can also load N sons, those sons can be logged in and only see their own data and parents can modify the data of their own sons (firstName, lastName and dni). 
+  The following challenge-api was developed using NODE with typescript, and contains a login / signup process for users who are also authenticated using bcrypt and jwt, those users can modify their data (firtName, lastName, dni, password, email and username), and they can also load N sons, those sons can be logged in and only see their own data and parents can modify the data of their own sons (firstName, lastName and dni). 
 
 ## Installing
 
