@@ -14,18 +14,15 @@ interface Ipaylaod {
 
 export const tokenValidation = (req: Request, res: Response, next: NextFunction) => {
   try {
-    let token = req.header('auth-token') 
+    let token = req.header('auth-token')
     if (!token) return response.error(req, res, 'Access token required', 400)
 
     const payload = jwt.verify(token, config.secret) as Ipaylaod
-    //declaration merging
     req.userId = payload._id
-
     next()
-
   } catch (error) {
     console.error(error)
-    return response.error(req, res, 'Token must be provided', 400)
+    return response.error(req, res, /expired/i.test(error.message) ? config.messages.tokenExpired : config.messages.provideToken, 400)
   }
 }
 
@@ -42,10 +39,10 @@ export const isModerator = async (req: Request, res: Response, next: NextFunctio
       }
     }
 
-    return response.error(req, res, "Require moderator role", 403)
+    return response.error(req, res, config.messages.requireModeratorRole, 403)
   } catch (error) {
     console.error(error)
-    return response.error(req, res, 'An error ocurred while checking moderator role', 401)
+    return response.error(req, res, config.messages.roleValidationError, 401)
   }
 }
 
@@ -62,10 +59,10 @@ export const isAdmin = async (req: Request, res: Response, next: NextFunction) =
       }
     }
 
-    return response.error(req, res, "Require admin role", 403)
+    return response.error(req, res, config.messages.requireAdminRole, 403)
   } catch (error) {
     console.error(error)
-    return response.error(req, res, 'An error ocurred while checking moderator role', 401)
+    return response.error(req, res, config.messages.roleValidationError, 401)
   }
 }
 
@@ -82,9 +79,9 @@ export const isUserOrAdmin = async (req: Request, res: Response, next: NextFunct
       }
     }
 
-    return response.error(req, res, "You can't do this action without login first", 403)
+    return response.error(req, res, config.messages.provideToken, 403)
   } catch (error) {
     console.error(error)
-    return response.error(req, res, 'An error ocurred while checking moderator role', 401)
+    return response.error(req, res, config.messages.roleValidationError, 401)
   }
 }
