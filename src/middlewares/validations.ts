@@ -12,7 +12,7 @@ export const isValidId = async (req: Request, res: Response, next: NextFunction)
     const { id } = req.params
 
     const validId = await user.validateId(id)
-    if (!validId) return response.error(req, res, 'The id is not in the correct format', 400)
+    if (!validId) return response.error(req, res, config.messages.invalidId, 400)
     //if(!id.match(/^[0-9a-fA-F]{24}$/)) return response.error(req, res, 'id not match', 400) //this could be another way to do the id validation
 
     next()
@@ -38,12 +38,12 @@ export const validateBody = async (req: Request, res: Response, next: NextFuncti
 
     //validate is username or email exist
     const userExist = await User.findOne({ $or: [{ email: input.email }, { username: input.username }] })
-    if (userExist) return response.error(req, res, `The email or username selected are not avaliables`, 400)
+    if (userExist) return response.error(req, res, config.messages.userExist, 400)
 
     //validate is role exist
     if (input.roles) {
       for (let i = 0; i < input.roles.length; i++) {
-        if (!ROLES.includes(input.roles[i])) return response.error(req, res, `The provided role doesn't exist`, 400)
+        if (!ROLES.includes(input.roles[i])) return response.error(req, res, config.messages.invalidRole, 400)
       }
     }
 
@@ -52,9 +52,9 @@ export const validateBody = async (req: Request, res: Response, next: NextFuncti
       if (validator.isEmpty(input[key])) return response.error(req, res, `The field ${key} can not be empty`, 400)
     }
 
-    if (!validator.isEmail(input.email)) return response.error(req, res, `The field email has to be in the correct format`, 400)
-    if (!validator.isNumeric(input.dni) || input.dni.length < 7) return response.error(req, res, `The field dni must be a seven digits number and should not contain special characters`, 400)
-    if (!validator.isAlphanumeric(input.username)) return response.error(req, res, `The username must only contain alphanumeric characters`, 400)
+    if (!validator.isEmail(input.email)) return response.error(req, res, config.messages.invalidEmail, 400)
+    if (!validator.isNumeric(input.dni) || input.dni.length < 7) return response.error(req, res, config.messages.invalidDni, 400)
+    if (!validator.isAlphanumeric(input.username)) return response.error(req, res, config.messages.invalidUsername, 400)
     //this could be used for an strong password
     if (!validator.isStrongPassword(input.password,
       {
@@ -72,7 +72,7 @@ export const validateBody = async (req: Request, res: Response, next: NextFuncti
         pointsForContainingSymbol: 0
       })
     ) {
-      return response.error(req, res, `The password is not strong enough`, 400)
+      return response.error(req, res, config.messages.invalidPassword, 400)
     }
 
 

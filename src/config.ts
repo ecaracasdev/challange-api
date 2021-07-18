@@ -6,11 +6,11 @@ export default {
   },
   messages: {
     successSignup: 'Successfully registered user',
-    loginFailed:'There is no registered user associate to the provided username or email',
+    loginFailed:'There is no registered user associate to the username or email provided',
     loginError: 'Email or password are wrong',
     loginSuccess: 'Login success',
     profileInfo: 'Profile info',
-    tokenExpired:'The provided token has expired you have to login again',
+    tokenExpired:'The token provided has expired you have to login again',
     provideToken:'The action can not be done without login first',
     requireModeratorRole: 'Require moderator role',
     requireAdminRole: 'Require admin role',
@@ -28,6 +28,13 @@ export default {
     userDeleted:'User deleted',
     userNotFound:'User not found',
     permissionDenied:'You are not allow to do this action',
-    sonByidNotFound: 'There is no son asociate at that id'
+    sonByidNotFound: 'There is no son asociate at that id',
+    invalidId:'The id is not in the correct format',
+    userExist:'The email or username selected are not avaliables',
+    invalidRole:'The role provided  does not exist',
+    invalidEmail:'The field email has to be in the correct format',
+    invalidDni:'The field dni must be a seven digits number and should not contain special characters',
+    invalidUsername:'The username must only contain alphanumeric characters',
+    invalidPassword:'The password is not strong enough'
   }
 }
