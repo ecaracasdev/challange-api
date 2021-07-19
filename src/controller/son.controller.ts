@@ -21,8 +21,9 @@ class Sons {
   }
 
   async getSonListByLimit(req: Request, res: Response): Promise<void> {
-    const sons = await Son.find().limit(10)
-
+    const { limit } = req.params
+    
+    const sons = await Son.find().limit(Number(limit))
     response.success(req, res, sons, config.messages.listSonLimit, 200)
   }
 
@@ -36,7 +37,7 @@ class Sons {
       lastName,
       dni,
       email: `${firstName}@mail.com`,
-      username: `${firstName}${lastName}`,
+      username: `${dni}`,
     })
 
     newUser.password = await newUser.encryptPassword(dni)
@@ -55,14 +56,18 @@ class Sons {
   }
 
   async updateSon(req: Request, res: Response): Promise<void> {
-    const { dni } = req.params
-    const son = await Son.findOneAndUpdate({ dni }, req.body, { new: true })
+    const { id } = req.params
+    const user = await User.findById(req.userId)
+    if(!user?.sons.includes(id)) return response.error(req, res, config.messages.sonUpdateDenied, 400)
+    const son = await Son.findByIdAndUpdate(id, req.body, { new: true })
     response.success(req, res, son, config.messages.sonUpdated, 201)
   }
 
   async deleteSon(req: Request, res: Response): Promise<void> {
-    const { url } = req.params
-    const son = await Son.findOneAndDelete({ url })
+    const { id } = req.params
+    const user = await User.findById(req.userId)
+    if(!user?.sons.includes(id)) return response.error(req, res, config.messages.sonUpdateDenied, 400)
+    const son = await Son.findByIdAndDelete(id)
     response.success(req, res, son.firstName, 'Son Deleted', 200)
   }
 

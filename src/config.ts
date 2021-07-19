@@ -35,6 +35,7 @@ export default {
     invalidEmail:'The field email has to be in the correct format',
     invalidDni:'The field dni must be a seven digits number and should not contain special characters',
     invalidUsername:'The username must only contain alphanumeric characters',
-    invalidPassword:'The password is not strong enough'
+    invalidPassword:'The password is not strong enough',
+    sonUpdateDenied: 'You are allow to modified only your sons'
   }
 }

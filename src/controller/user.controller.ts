@@ -17,7 +17,7 @@ class Users {
 
     const userExist = await User.findById(req.userId)
     if(!userExist) return response.error(req, res, config.messages.userNotFound, 400)
-    if(userExist?.username !== username) return response.error(req, res, config.messages.permissionDenied, 400)
+    //if(userExist?.username !== username) return response.error(req, res, config.messages.permissionDenied, 400)
 
     const user = await User.findOne({ username }).populate('sons', 'firstName lastName dni -_id').populate('roles','name -_id')
     const data = [user]
@@ -70,7 +70,7 @@ class Users {
     if( sonExist.firstName === username ) console.log(`${username} es hijo de ${userExist?.username}`)
     if(!userExist) return response.error(req, res, config.messages.userNotFound, 400)
 
-    if(userExist?.username !== username && sonExist.firstName !== username ) return response.error(req, res, config.messages.permissionDenied, 400)
+    //if(userExist?.username !== username && sonExist.firstName !== username ) return response.error(req, res, config.messages.permissionDenied, 400)
 
     const user = await User.findOneAndUpdate(
       { username }, 
