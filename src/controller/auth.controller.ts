@@ -49,7 +49,7 @@ class Auth {
       expiresIn: 60 * 60 * 24
     })
 
-    response.sign_success(req, res, { email: user.email, username: user.username }, config.messages.loginSuccess, 200, token)
+    response.sign_success(req, res, {token}, config.messages.loginSuccess, 200, token)
   }
 
   async profile(req: Request, res: Response) {

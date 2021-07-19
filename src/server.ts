@@ -5,6 +5,11 @@ import compression from "compression"
 import cors from "cors"
 import dotenv from "dotenv"
 
+//swagger
+import swaggerUI from "swagger-ui-express"
+import swaggerJsDoc from "swagger-jsdoc"
+import { options } from "./swaggerOptions";
+
 import userRoutes from "./routes/user.routes"
 import sonRoutes from "./routes/son.routes"
 import auth from "./routes/auth.routes"
@@ -38,12 +43,18 @@ class Server {
     this.app.use(helmet())
     this.app.use(compression())
     this.app.use(cors())
+
+
   }
 
   routes() {
+    const specs = swaggerJsDoc(options)
+
     this.app.use('/api/auth',auth)
     this.app.use('/api/users',userRoutes)
     this.app.use('/api/sons',sonRoutes)
+
+    this.app.use('/docs', swaggerUI.serve, swaggerUI.setup(specs))
   }
 
   start() {

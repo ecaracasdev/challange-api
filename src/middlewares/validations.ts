@@ -25,7 +25,6 @@ export const isValidId = async (req: Request, res: Response, next: NextFunction)
 export const validateBody = async (req: Request, res: Response, next: NextFunction) => {
   try {
 
-    console.log(`[middleware.validations] req.body `, req.body)
     const input: any = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -33,15 +32,16 @@ export const validateBody = async (req: Request, res: Response, next: NextFuncti
       email: req.body.email,
       password: req.body.password,
       username: req.body.username,
-      roles: req.body.roles
+      roles: req.body.roles || ''
     }
 
+    console.log(input.roles)
     //validate is username or email exist
     const userExist = await User.findOne({ $or: [{ email: input.email }, { username: input.username }] })
     if (userExist) return response.error(req, res, config.messages.userExist, 400)
 
     //validate is role exist
-    if (input.roles) {
+    if (!!input.roles) {
       for (let i = 0; i < input.roles.length; i++) {
         if (!ROLES.includes(input.roles[i])) return response.error(req, res, config.messages.invalidRole, 400)
       }
@@ -49,13 +49,13 @@ export const validateBody = async (req: Request, res: Response, next: NextFuncti
 
     //validate sigup or user create input
     for (const key in input) {
+      if(key !== 'roles')
       if (validator.isEmpty(input[key])) return response.error(req, res, `The field ${key} can not be empty`, 400)
     }
 
     if (!validator.isEmail(input.email)) return response.error(req, res, config.messages.invalidEmail, 400)
     if (!validator.isNumeric(input.dni) || input.dni.length < 7) return response.error(req, res, config.messages.invalidDni, 400)
     if (!validator.isAlphanumeric(input.username)) return response.error(req, res, config.messages.invalidUsername, 400)
-    //this could be used for an strong password
     if (!validator.isStrongPassword(input.password,
       {
         minLength: 5,

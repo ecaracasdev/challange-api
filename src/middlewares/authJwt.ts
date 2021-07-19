@@ -14,7 +14,10 @@ interface Ipaylaod {
 
 export const tokenValidation = (req: Request, res: Response, next: NextFunction) => {
   try {
-    let token = req.header('auth-token')
+    let token = req.header('Authorization')
+    if( token?.includes('Bearer ') ) {
+      token = token.replace('Bearer ', '')
+    } 
     if (!token) return response.error(req, res, 'Access token required', 400)
 
     const payload = jwt.verify(token, config.secret) as Ipaylaod
