@@ -22,7 +22,7 @@ npm install
 
 With the admin user you can start testing the API's sections, for example the endpoint GET /api/sons will show the list of current sons, you can also login with the users's sons credentials (using their dni) as is explained below
  
-### The api contais three basic section, 
+### The api contais three basic sections, 
   1. Signin , Login and Profile , the profile endpoint will show the user logged info.
   2. CRUD for users, this section can be access only for an admin-role user when the user is logged
   3. CRUD for sons this only can be access once the user is logged and is his role is admin
