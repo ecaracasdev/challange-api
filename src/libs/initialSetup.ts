@@ -10,7 +10,6 @@ export const createRoles = async () => {
 
     const values = await Promise.all([
       new Roles({ name: 'user' }).save(),
-      new Roles({ name: 'moderator' }).save(),
       new Roles({ name: 'admin' }).save()
     ])
 
@@ -26,8 +25,8 @@ export const createSons = async () => {
     if (sonsCounter > 0) return
 
     const sons = await Promise.all([
-      new Sons({ firstName: 'childOne', lastName: 'lastNameOne', dni: '456789123' }).save(),
-      new Sons({ firstName: 'childTwo', lastName: 'lastNameTwo', dni: '987654321' }).save(),
+      new Sons({ firstName: 'childOne', lastName: 'lastNameOne', dni: '1234567' }).save(),
+      new Sons({ firstName: 'childTwo', lastName: 'lastNameTwo', dni: '7654321' }).save(),
     ])
 
     const usersCounter = await User.estimatedDocumentCount()
@@ -46,14 +45,14 @@ export const createSons = async () => {
     
     let userSonOne: IUser = new User({ firstName:sons[0]['firstName'] , lastName: sons[0]['lastName'] , dni: sons[0]['dni'], email: 'childOne@gmail.com' })
     userSonOne.password = await user.encryptPassword(sons[0]['dni'])
-    userSonOne.username = 'childOne'
+    userSonOne.username = sons[0]['dni']
     userSonOne.sons = []
     userSonOne.roles = [userRole._id]
     await userSonOne.save()
 
     let userSonTwo: IUser = new User({ firstName: sons[1]['firstName'], lastName: sons[1]['lastName'], dni: sons[1]['dni'], email: 'childTwo@gmail.com' })
     userSonTwo.password = await user.encryptPassword(sons[1]['dni'])
-    userSonTwo.username = 'childTwo'
+    userSonTwo.username = sons[1]['dni']
     userSonTwo.sons = []
     userSonTwo.roles = [userRole._id]
     await userSonTwo.save()

@@ -54,7 +54,7 @@ export const validateBody = async (req: Request, res: Response, next: NextFuncti
     }
 
     if (!validator.isEmail(input.email)) return response.error(req, res, config.messages.invalidEmail, 400)
-    if (!validator.isNumeric(input.dni) || input.dni.length < 7) return response.error(req, res, config.messages.invalidDni, 400)
+    if (!validator.isNumeric(input.dni) || input.dni.length < 5) return response.error(req, res, config.messages.invalidDni, 400)
     if (!validator.isAlphanumeric(input.username)) return response.error(req, res, config.messages.invalidUsername, 400)
     if (!validator.isStrongPassword(input.password,
       {
