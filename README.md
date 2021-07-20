@@ -11,7 +11,18 @@ npm install
 
 ## Documentation
 
-  The api contais three basic section, 
+# Once The API is running, there are one user and two sons will be automatically created, the credentials for the admin user are:
+
+```
+{
+  username: admin,
+  password: password
+}
+```
+
+With the admin user you can start testing the API section
+ 
+# The api contais three basic section, 
   1. Signin , Login and Profile , the profile endpoint will show the user logged info.
   2. CRUD for users, this section can be access only for an admin-role user
   3. CRUD for sons this only can be access once the user is logged and is his role is admin
@@ -22,14 +33,14 @@ When a new SON is created this action will also create an new user for that SON 
   password: dni
 }
 ```
-*  The main endpoints are
+#  The main endpoints are
   1. /api/auth/signup -> User registration
   2. /api/auth/login  -> User or Son login (fill the blanks with dni in case of son's user)
   3. /api/auth/profile -> Info of the current logged user
   4. /api/sons/ -> Son's CRUD detailed in the /docs endpoint
   5. /api/users/ -> Users's CRUD detailed in the /docs endpoint
 
-*  Once started the server you can access the documentation here http://localhost:3000/docs , I choose swagger for the documentation and functional testing of the endpoints 
+#  Once started the server you can access the documentation here http://localhost:3000/docs , I choose swagger for the documentation and functional testing of the endpoints 
 
 ## Building
 
