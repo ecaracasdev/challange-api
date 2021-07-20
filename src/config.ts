@@ -13,7 +13,7 @@ export default {
     tokenExpired:'The token provided has expired you have to login again',
     provideToken:'The action can not be done without login first',
     requireModeratorRole: 'Require moderator role',
-    requireAdminRole: 'Require admin role',
+    requireAdminRole: 'Admin role is required',
     roleValidationError: 'An error ocurred while user validation',
     sonsList:'List of sons',
     sonFound:'Son found',
@@ -36,6 +36,7 @@ export default {
     invalidDni:'The field dni must be a seven digits number and should not contain special characters',
     invalidUsername:'The username must only contain alphanumeric characters',
     invalidPassword:'The password is not strong enough',
-    sonUpdateDenied: 'You are allow to modified only your sons'
+    sonUpdateDenied: 'You are allow to modified only your sons',
+    dniExist: 'The dni has been used'
   }
 }

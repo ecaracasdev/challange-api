@@ -1,5 +1,5 @@
 import { tokenValidation, isModerator, isAdmin, isUserOrAdmin } from "./authJwt"
-import { isValidId, validateBody } from "./validations"
+import { isValidId, validateBody, validateSonCreation } from "./validations"
 
 export {
   tokenValidation,
@@ -7,5 +7,6 @@ export {
   isAdmin,
   isUserOrAdmin,
   isValidId,
-  validateBody
+  validateBody,
+  validateSonCreation
 }
