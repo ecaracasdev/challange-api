@@ -22,6 +22,13 @@ When a new SON is created this action will also create an new user for that SON 
   password: dni
 }
 ```
+*  The main endpoints are
+  1. /api/auth/signup -> User registration
+  2. /api/auth/login  -> User or Son login (fill the blanks with dni in case of son's user)
+  3. /api/auth/profile -> Info of the current logged user
+  4. /api/sons/ -> Son's CRUD detailed in the /docs endpoint
+  5. /api/users/ -> Users's CRUD detailed in the /docs endpoint
+
 *  Once started the server you can access the documentation here http://localhost:3000/docs , I choose swagger for the documentation and functional testing of the endpoints 
 
 ## Building
