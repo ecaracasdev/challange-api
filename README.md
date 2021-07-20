@@ -14,7 +14,7 @@ npm install
   The api contais three basic section, 
   1. Signin , Login and Profile , the profile endpoint will show the user logged info.
   2. CRUD for users, this section can be access only for an admin-role user
-  3. one CRUD for sons this only can be access once the user is logged and is his role is admin
+  3. CRUD for sons this only can be access once the user is logged and is his role is admin
 When a new SON is created this action will also create an new user for that SON ,the role of this new user is "user" the credentials for the user's are his own DNI as it follows:
 ```
 {
@@ -22,7 +22,7 @@ When a new SON is created this action will also create an new user for that SON 
   password: dni
 }
 ```
-*  Once started the server you can access the documentation herehttp://localhost:3000/docs
+*  Once started the server you can access the documentation (here) http://localhost:3000/docs /docs, I choose swagger for the documentation and functional testing of the endpoints 
 
 ## Building
 
