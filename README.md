@@ -22,7 +22,7 @@ When a new SON is created this action will also create an new user for that SON 
   password: dni
 }
 ```
-*  Once started the server you can access the documentation (here) http://localhost:3000/docs /docs, I choose swagger for the documentation and functional testing of the endpoints 
+*  Once started the server you can access the documentation here http://localhost:3000/docs , I choose swagger for the documentation and functional testing of the endpoints 
 
 ## Building
 
