@@ -40,11 +40,11 @@ When a new SON is created this action will also create an new user for that SON 
   4. /api/sons/ -> Son's CRUD detailed in the /docs endpoint
   5. /api/users/ -> Users's CRUD detailed in the /docs endpoint
 
-###  Once started the server you can access the documentation here http://localhost:3000/docs , I choose swagger for the documentation and functional testing of the endpoints 
+###  Once the server is running you can access the documentation here http://localhost:3000/docs , I choose swagger for the documentation and functional testing of the endpoints 
 
 ## Building
 
-In order to build the TypeScript compiler, ensure that you have [Git](https://git-scm.com/downloads) , [Node.js](https://nodejs.org/) and [MongoDB](https://www.mongodb.com/es) installed.
+In order to run the TypeScript project, ensure that you have [Git](https://git-scm.com/downloads) , [Node.js](https://nodejs.org/) and [MongoDB](https://www.mongodb.com/es) installed.
 
 Clone a copy of the repo:
 
