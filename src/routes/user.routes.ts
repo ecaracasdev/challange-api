@@ -180,7 +180,7 @@ class UserRoutes {
      *              default: userExample
      *            roles:
      *              type: array
-     *              default: ["user"]
+     *              default: ["admin"]
      *   responses:
      *    200:
      *      description: This is the default response for user creation
