@@ -11,7 +11,7 @@ npm install
 
 ## Documentation
 
-### Once The API is running, there are one user and two sons will be automatically created, the credentials for the admin user are:
+### Once The API is running, two roles (admin and user) are created and there are one user and two sons in the users and son schema, both of them will be automatically created, the credentials for the admin user are.
 
 ```
 {
@@ -20,7 +20,7 @@ npm install
 }
 ```
 
-With the admin user you can start testing the API section
+With the admin user you can start testing the API section, for example the endpoint GET /api/sons should show the list of current sons, you can also login with the users's sons credentials (using their dni) as is explained below
  
 ### The api contais three basic section, 
   1. Signin , Login and Profile , the profile endpoint will show the user logged info.
