@@ -11,7 +11,7 @@ npm install
 
 ## Documentation
 
-### Once The API is running, two roles (admin and user) are created and there are one user and two sons in the users and son schema, both of them will be automatically created, the credentials for the admin user are.
+### Once The API is running, two roles (admin and user) are created and there is one user and two sons in the users and son schema, both of them will be automatically created, the credentials for the admin user are.
 
 ```
 {
@@ -24,7 +24,7 @@ With the admin user you can start testing the API section, for example the endpo
  
 ### The api contais three basic section, 
   1. Signin , Login and Profile , the profile endpoint will show the user logged info.
-  2. CRUD for users, this section can be access only for an admin-role user
+  2. CRUD for users, this section can be access only for an admin-role user when the user is logged
   3. CRUD for sons this only can be access once the user is logged and is his role is admin
 When a new SON is created this action will also create an new user for that SON ,the role of this new user is "user" the credentials for the user's are his own DNI as it follows:
 ```
