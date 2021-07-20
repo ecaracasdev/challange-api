@@ -129,6 +129,7 @@ class AuthRoutes {
      * /api/auth/profile:
      *  get:
      *   tags: [Auth]
+     *   summary: Get the logged User or Son information
      *   security:
      *    - bearerAuth: []
      *   responses:

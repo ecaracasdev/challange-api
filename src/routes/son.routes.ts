@@ -1,7 +1,7 @@
 import { Router } from 'express'
 
 import son from '../controller/son.controller'
-import { tokenValidation, isAdmin, isValidId } from "../middlewares"
+import { tokenValidation, isAdmin, isValidId, validateBody, validateSonCreation } from "../middlewares"
 class SonRoutes {
 
   router: Router
@@ -78,10 +78,11 @@ class SonRoutes {
      *  get:
      *    security: 
      *      - bearerAuth: []
+     *    summary: Sons list limit by 10
      *    tags: [Sons]
      *    responses:
      *      200:
-     *        description: Sons list
+     *        description: Sons list limit by 10
      *        content:
      *          application/json:
      *            schema:
@@ -161,7 +162,7 @@ class SonRoutes {
      *              default: "123456789"
      *   responses:
      *    200:
-     *      description: This is the default response for son creation
+     *      description: Take in care that every new son has a user
      *      content:
      *        application/json:
      *          schema:
@@ -170,7 +171,7 @@ class SonRoutes {
      *      description: This is the default responses error for son creation
      * 
      */
-    this.router.post('/', [tokenValidation, isAdmin], son.createSon)
+    this.router.post('/', [tokenValidation, isAdmin, validateSonCreation], son.createSon)
 
     /**
      * @swagger

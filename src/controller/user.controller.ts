@@ -2,7 +2,6 @@ import { Request, Response } from 'express'
 import response from '../libs/responses'
 import User, { IUser } from '../models/user'
 import Roles from '../models/roles'
-import Son from '../models/sons'
 import config from '../config'
 
 class Users {
@@ -26,9 +25,9 @@ class Users {
 
   async getSonsByUsername(req: Request, res: Response): Promise<void> {
     const user = await User.findById(req.userId).populate('sons', 'firstName lastName dni -_id')
-    if(!user) response.error(req, res, config.messages.userNotFound, 400)
+    if(!user) return response.error(req, res, config.messages.userNotFound, 400)
     if(user){
-      if(user.username !== req.params.username) response.error(req, res, config.messages.permissionDenied, 400)
+      if(user.username !== req.params.username) return response.error(req, res, config.messages.permissionDenied, 400)
 
       const sonsList = user.sons
       response.success(req, res, sonsList, `List of ${user.username} sons`, 200)
@@ -61,30 +60,14 @@ class Users {
   }
 
   async updateUser(req: Request, res: Response): Promise<void> {
-    const { username } = req.params
-    const { firstName, lastName, dni, email, password } = req.body
+    const { id } = req.params
+    const { firstName, lastName, dni, email, password, username } = req.body
     
     const userExist = await User.findById(req.userId)
-    const sonExist = await Son.findOne({_id:{$in:userExist?.sons}})
-
-    if( sonExist.firstName === username ) console.log(`${username} es hijo de ${userExist?.username}`)
     if(!userExist) return response.error(req, res, config.messages.userNotFound, 400)
+    const userUpdated = await User.findByIdAndUpdate(id, { firstName, lastName, dni, email, password: await userExist?.encryptPassword(password), username }, { new: true })
 
-    //if(userExist?.username !== username && sonExist.firstName !== username ) return response.error(req, res, config.messages.permissionDenied, 400)
-
-    const user = await User.findOneAndUpdate(
-      { username }, 
-      { 
-        firstName, 
-        lastName, 
-        dni, 
-        email, 
-        password: await userExist?.encryptPassword(password)
-      }, 
-      { new: true }
-    )
-    const data = [user]
-
+    const data = [userUpdated] 
     response.success(req, res, data, config.messages.userUpdated, 201)
   }
 

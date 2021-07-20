@@ -63,6 +63,13 @@ class UserRoutes {
      *      schema:
      *        type: string
      *      description: Username as a parameter
+     *    userId:
+     *      in: path
+     *      name: id
+     *      required: true
+     *      schema:
+     *        type: string
+     *      description: Username as a parameter
      *        
      */
 
@@ -189,14 +196,14 @@ class UserRoutes {
 
     /**
      * @swagger
-     * /api/users/{username}:
+     * /api/users/{id}:
      *  put:
      *   security:
      *    - bearerAuth: []
-     *   summary: Update user info
+     *   summary: Update user's data 
      *   tags: [Users]
      *   parameters:
-     *    - $ref: '#/components/parameters/userName'
+     *    - $ref: '#/components/parameters/sonId'
      *   requestBody:
      *    required: true
      *    content:
@@ -206,37 +213,29 @@ class UserRoutes {
      *          properties:
      *            firstName:
      *              type: string
-     *              default: userExample
      *            lastName:
      *              type: string
-     *              default: userExample
      *            email:
      *              type: string
-     *              default: userExample@mail.com
      *            dni:
      *              type: string
-     *              default: "123456789"
      *            password:
      *              type: string
-     *              default: password
      *            username:
      *              type: string
-     *              default: userExample
-     *            roles:
-     *              type: array
-     *              default: ["user"]
+     *            
      *   responses:
      *    200:
-     *      description: This is the default response for user creation
+     *      description: This is the default response for sons update
      *      content:
      *        application/json:
      *          schema:
      *            $ref: '#/components/schemas/Users'
      *    400:
-     *      description: This is the default responses error for user creation
+     *      description: This is the default responses error for son update
      * 
      */
-    this.router.put('/:username', [tokenValidation, isAdmin], user.updateUser)
+    this.router.put('/:id', [tokenValidation, isAdmin], user.updateUser)
 
     /**
      * @swagger

@@ -82,3 +82,31 @@ export const validateBody = async (req: Request, res: Response, next: NextFuncti
     return response.error(req, res, error.message, 400)
   }
 }
+
+export const validateSonCreation = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+
+    const input: any = {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      dni: req.body.dni,
+    }
+
+    const userExist = await User.findOne({ dni: input.dni })
+    if (userExist) return response.error(req, res, config.messages.dniExist, 400)
+
+    for (const key in input) {
+      if (validator.isEmpty(input[key])) return response.error(req, res, `The field ${key} can not be empty`, 400)
+    }
+
+    if (!validator.isNumeric(input.dni) || input.dni.length < 7) return response.error(req, res, config.messages.invalidDni, 400)
+    if (!validator.isAlphanumeric(input.firstName)) return response.error(req, res, config.messages.invalidUsername, 400)
+    if (!validator.isAlphanumeric(input.lastName)) return response.error(req, res, config.messages.invalidUsername, 400)
+
+    next()
+  } catch (error) {
+    console.error(error)
+    return response.error(req, res, error.message, 400)
+  }
+}
+

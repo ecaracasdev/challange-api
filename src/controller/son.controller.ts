@@ -9,7 +9,7 @@ import User from '../models/user'
 class Sons {
 
   async getSons(req: Request, res: Response): Promise<void> {
-    const sons = await Son.find()
+    const sons = await Son.find().limit(10)
     response.success(req, res, sons, config.messages.sonsList, 200)
   }
 
@@ -51,6 +51,7 @@ class Sons {
       father_user.sons.push(newSon.id)
       await father_user.save()
     }
+    
     const data = { "newSon": newSon, "newUser": newUser }
     response.success(req, res, data, config.messages.sonCreated, 201)
   }
